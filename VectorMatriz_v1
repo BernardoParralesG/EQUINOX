@@ -1,0 +1,210 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+public class Menu {
+    public static void main(String[] args) {
+        final int MAX=10, MAXF=6, MAXC=6;
+        int [] vector=new int [MAX];
+        int matriz [][]=new int [MAXF][MAXC];
+        MenuP(vector, matriz, MAX, MAXF, MAXC);
+    }
+    public static void MenuP(int vector[],int matriz[][],int MAX,int MAXF,int MAXC){
+        Scanner scnnr = new Scanner(System.in);
+        boolean retornar = true;
+        
+        do{
+            System.out.println("-----  Menu  -----");
+            System.out.println("1. Vector");
+            System.out.println("2. Matriz");
+            System.out.println("3. Salir");
+            System.out.print("Digite Opcion : ");
+            
+            int opcion=0;
+            try{
+                opcion=scnnr.nextInt();
+                if (opcion<1 || opcion>3){
+                    System.out.println("\nERROR DIGITO FUERA DEL RANGO...\n");
+                }
+            }catch(InputMismatchException e){
+                System.out.println("\nERRROR DATO NO VALIDO...\n");
+                scnnr.next();
+            }
+            switch(opcion){
+                case 1:
+                    MenuV(vector, MAX);
+                    break;
+                case 2:
+                    MenuM(matriz, MAXF, MAXC);
+                    break;
+                case 3:
+                    retornar=false;
+                    break;
+            }
+        }while(retornar);
+    }
+    public static void MenuV(int vector[], int MAX ){
+        Scanner scnnr = new Scanner(System.in);
+        boolean retornar = true;
+        
+        do{
+            System.out.println("-----  Menu Vector  -----");
+            System.out.println("1. Cargar Vector Al Azar");
+            System.out.println("2. Consultar Vector");
+            System.out.println("3. Buscar Dato");
+            System.out.println("4. Regresar Al Menu Principal");
+            System.out.print("Digite Opcion : ");
+                
+            int opcion=0;
+            try{
+                opcion=scnnr.nextInt();
+                if (opcion<1 || opcion>4){
+                    System.out.println("\nERROR DIGITO FUERA DEL RANGO...\n");
+                }
+            }catch(InputMismatchException e){
+                System.out.println("\nERRROR DATO NO VALIDO...\n");
+                scnnr.next();
+            }
+            
+            switch(opcion){
+                case 1:
+                    CargarVector(vector, MAX);
+                    break;
+                case 2:
+                    ConsultarVector(vector);
+                    break;
+                case 3:
+                    BuscarDatoV(vector, MAX);
+                    break;
+                case 4:
+                    retornar=false;
+                    break;
+            }
+        }while(retornar);
+    }
+    public static void MenuM(int matriz[][],int MAXF,int MAXC){
+        Scanner scnnr = new Scanner(System.in);
+        boolean retornar = true;
+  
+        do{
+            System.out.println("-----  Menu Matriz  -----");
+            System.out.println("1. Cargar Matriz Con Numeros Aletorios");
+            System.out.println("2. Consultar Matriz");
+            System.out.println("3. Buscar Dato");
+            System.out.println("4. Retornar Al Menu Principal");
+            System.out.print("Digite Opcion : ");
+                
+            int opcion=0;
+            try{
+                opcion=scnnr.nextInt();
+                if (opcion<1 || opcion>4){
+                    System.out.println("\nERROR DIGITO FUERA DEL RANGO...\n");
+                }
+            }catch(InputMismatchException e){
+                System.out.println("\nERRROR DATO NO VALIDO...\n");
+                scnnr.next();
+            }
+            switch(opcion){
+                case 1:
+                    CargarMatriz(matriz, MAXF, MAXC);
+                    break;
+                case 2:
+                    ConsultarMatriz(matriz);
+                    break;
+                case 3:
+                    BuscarDatoM(matriz, MAXF, MAXC);
+                    break;
+                case 4:
+                    retornar=false;
+                    break;  
+            }
+        }while(retornar);
+    }
+    public static void CargarVector(int [] v,int mx){
+        for(int i=0;i<mx;i++){   
+            v [i]=(int) (Math.random()*50+1);
+        }
+        System.out.println("\nVector Cargado...");
+    }  
+    public static void ConsultarVector(int [] v){
+        System.out.println(" ");
+        for(int i:v){
+            System.out.println("| "+i+" |");
+        }
+        System.out.println(" ");
+    }
+    public static void BuscarDatoV(int [] v, int mx){
+        Scanner scnnr=new Scanner (System.in);
+        int val=0;
+        boolean valor = false;
+        int i=0;
+        int casilla=0;
+        try{
+            System.out.println("Ingrese Dato a buscar :");
+            val=scnnr.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println("\nERRROR DATO NO VALIDO...\n");
+            scnnr.next();
+        }
+        while(i<mx && valor==false){
+            if(val==v[i]){
+                valor=true;
+                casilla=i;
+            }
+            i=i+1;
+        }
+        if(valor==true){
+            System.out.println("\nEl Valor "+ val +" esta en la casilla "+ casilla);
+        } else {
+            System.out.println("\nNo se encontro");
+        }
+    }
+    public static void CargarMatriz(int m [][],int mxf, int mxc){
+        for (int f=0; f<mxf; f++){
+            for (int c=0; c<mxc; c++){   
+                m[f][c]=(int) (Math.random()*50+1);
+            }
+        }
+        System.out.println("\nMatriz Cargada...");
+    }
+    public static void ConsultarMatriz(int m [][]){
+        System.out.println(" ");
+        for (int[] mat : m) {
+            System.out.print(" ");
+            for (int y = 0; y < mat.length; y++) {
+                System.out.print(mat[y]);
+                if (y != mat.length -1) {
+                    System.out.print("\t");
+                }
+            }
+            System.out.println(" ");
+        }
+        System.out.println("\n");
+    }
+    public static void BuscarDatoM(int matriz [][], int maxf, int maxc ){
+        Scanner scnnr=new Scanner (System.in);
+        boolean valor = false;
+        int f=0;
+        int c=0;
+        int val=0;
+        try{
+            System.out.println("Ingrese Dato a buscar :");
+            val=scnnr.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println("\nERRROR DATO NO VALIDO...\n");
+            scnnr.next();
+        }
+        for(int i=0;i<maxf;i++){
+            for(int j=0;j<maxc;j++){
+                if(matriz[i][j]==val){
+                    f=i;
+                    c=j;
+                    valor=true;
+                }
+            } 
+        }
+        if(valor==true){
+            System.out.println("El valor "+ val +" esta en la fila "+ (f+1) +" Columna "+ (c+1));
+        } else {
+            System.out.println("No se encontro");
+        }
+    }
+}
